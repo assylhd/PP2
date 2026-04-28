@@ -62,6 +62,6 @@ DB_CONFIG = {
     "host": "localhost",
     "database": "snake_db",
     "user": "postgres",
-    "password": "Killu7755",
+    "password": "Assyl#07".encode('utf-8').decode('utf-8'),
     "port": 5432,
 }

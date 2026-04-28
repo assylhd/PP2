@@ -1,9 +1,3 @@
-"""
-phonebook.py  –  PhoneBook Extended (TSIS 1)
-Builds on the CRUD / CSV / search / pagination foundations from
-Practice 7 & 8.  Only NEW features are implemented here.
-"""
-
 import csv
 import json
 import os

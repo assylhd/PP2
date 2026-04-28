@@ -36,6 +36,12 @@
         "coins": 19
     },
     {
+        "name": "qq",
+        "score": 861,
+        "distance": 878,
+        "coins": 15
+    },
+    {
         "name": "zhanel",
         "score": 744,
         "distance": 604,
@@ -52,11 +58,5 @@
         "score": 525,
         "distance": 465,
         "coins": 6
-    },
-    {
-        "name": "Asqsq",
-        "score": 493,
-        "distance": 443,
-        "coins": 5
     }
 ]
