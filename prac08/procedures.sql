@@ -1,0 +1,42 @@
+CREATE OR REPLACE PROCEDURE upsert_contact(p_name VARCHAR, p_phone VARCHAR)
+LANGUAGE plpgsql AS $$
+BEGIN
+    IF EXISTS (SELECT 1 FROM phonebook WHERE first_name = p_name) THEN
+        UPDATE phonebook SET phone = p_phone WHERE first_name = p_name;
+    ELSE
+        INSERT INTO phonebook (first_name, phone) VALUES (p_name, p_phone);
+    END IF;
+END;
+$$;
+
+
+CREATE OR REPLACE PROCEDURE insert_many_contacts(data JSON)
+LANGUAGE plpgsql AS $$
+DECLARE
+    item JSON;
+    p_name VARCHAR;
+    p_phone VARCHAR;
+BEGIN
+    FOR item IN SELECT * FROM json_array_elements(data)
+    LOOP
+        p_name := item->>'name';
+        p_phone := item->>'phone';
+        IF p_phone ~ '^\+?[0-9]{10,15}$' THEN
+            INSERT INTO phonebook (first_name, phone)
+            VALUES (p_name, p_phone)
+            ON CONFLICT (phone) DO NOTHING;
+        ELSE
+            RAISE NOTICE 'Неверный номер для %: %', p_name, p_phone;
+        END IF;
+    END LOOP;
+END;
+$$;
+
+
+CREATE OR REPLACE PROCEDURE delete_contact(p_value VARCHAR)
+LANGUAGE plpgsql AS $$
+BEGIN
+    DELETE FROM phonebook
+    WHERE first_name = p_value OR phone = p_value;
+END;
+$$;
